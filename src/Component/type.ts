@@ -7,9 +7,16 @@ export type CategoryItem = {
 
 export type RowTableProps = {
   data: CategoryItem,
-  onDelete: () => void
+  onDelete: () => void,
+  no?: number,
+  onEdit: (itemEdit: CategoryItem) => void
 }
 
 export type TableDataProps = {
   listCategories: CategoryItem[]
+}
+export type NewDataProps = {
+  initData: CategoryItem,
+  isEdit: Boolean,
+  onSubmit: (newCategory: CategoryItem) => void
 }

@@ -1,12 +1,13 @@
 import React from "react";
 import { RowTableProps } from "./type";
 
-export const RowTable: React.FC<RowTableProps> = ({data: {id, name, isUsed, date}, onDelete}) => {
+export const RowTable: React.FC<RowTableProps> = ({data: Category, onDelete, no, onEdit}) => {
   return <tr>
-    <td>{id}</td>
-    <td>{name}</td>
-    <td>{isUsed === 1 ? "Used" : "Not Used"}</td>
-    <td>{date}</td>
+    <td>{no}</td>
+    <td>{Category.name}</td>
+    <td>{Category.isUsed === 1 ? "Used" : "Not Used"}</td>
+    <td>{Category.date}</td>
+    <td><button onClick={()=>onEdit(Category)}>EDIT</button></td>
     <td onClick={onDelete}>x</td>
   </tr>;
 };
