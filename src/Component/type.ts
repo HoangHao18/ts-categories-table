@@ -1,21 +1,21 @@
 export type CategoryItem = {
-  id: string,
+  id?: string,
   name: string,
   isUsed: Number,
-  date?: string
+  date: string,
+  no?: number
 }
 
 export type RowTableProps = {
   data: CategoryItem,
   onDelete: () => void,
-  no?: number,
   onEdit: (itemEdit: CategoryItem) => void
 }
 
 export type TableDataProps = {
   listCategories: CategoryItem[]
 }
-export type NewDataProps = {
+export type FormDataProps = {
   initData: CategoryItem,
   isEdit: Boolean,
   onSubmit: (newCategory: CategoryItem) => void

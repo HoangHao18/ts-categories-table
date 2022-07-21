@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { NewData } from "./NewData";
+import { FormData } from "./FormData";
 import { RowTable } from "./RowTable";
 import { CategoryItem, TableDataProps } from "./type";
 
-function creatId() {
+const creatId = ()=>{
   let a = new Uint32Array(3);
   window.crypto.getRandomValues(a);
   return (performance.now().toString(36)+Array.from(a).map(A => A.toString(36)).join("")).replace(/\./g,"");
 }
 
-const initNewCategory : CategoryItem= {id: "", name: "", isUsed: 0, date: (new Date()).toDateString()}
+const creatNo = (arr: CategoryItem[]) =>{
+  let index = arr.length - 1
+  let temp = arr[index].no
+  if(temp) temp++
+  return temp
+}
+
+const initNewCategory : CategoryItem= {name: "", isUsed: 0, date: (new Date()).toDateString()}
 
 export const TableData: React.FC<TableDataProps> = ({listCategories}) => {
   const [categories, setCategories] = useState<CategoryItem[]>(listCategories)
@@ -18,7 +25,7 @@ export const TableData: React.FC<TableDataProps> = ({listCategories}) => {
   const [itemSetting, setItemSetting] = useState(initNewCategory)
   
   const handleAddCategory = (newCategory: CategoryItem) => {
-    const temp:Array<CategoryItem> = [...categories, {...newCategory, id: creatId()}]
+    const temp:Array<CategoryItem> = [...categories, {...newCategory, id: creatId(), no: creatNo(categories)}]
     setCategories(temp)
     setIsShowAddNew(false)
   }
@@ -66,10 +73,10 @@ export const TableData: React.FC<TableDataProps> = ({listCategories}) => {
       <>
         <button onClick={()=>setIsShowAddNew(!isShowAddNew)}>{`${isShowAddNew ? "Close Add New" : "Add New"}`}</button>
         {
-          isShowAddNew &&  <NewData onSubmit={handleAddCategory} isEdit={false} initData={initNewCategory}/>
+          isShowAddNew &&  <FormData onSubmit={handleAddCategory} isEdit={false} initData={initNewCategory}/>
         }
         {
-          isEdit && <NewData onSubmit={handleEditCategory} isEdit={isEdit} initData={itemSetting}/>
+          isEdit && <FormData onSubmit={handleEditCategory} isEdit={isEdit} initData={itemSetting} />
         }
       </>
     </div>
@@ -90,7 +97,7 @@ export const TableData: React.FC<TableDataProps> = ({listCategories}) => {
             <tbody>
               {
                 categories.map(
-                  (item, index) => <RowTable key={item.id} data={item} onDelete={()=>handleDeleteCategory(item.id)} no={index++} onEdit={handleOpenEditForm}/>
+                  (item) => <RowTable key={item.id} data={item} onDelete={()=>handleDeleteCategory(item.id??"")} onEdit={handleOpenEditForm}/>
                 )
               }
             </tbody> :

@@ -1,9 +1,9 @@
 import React from "react";
 import { RowTableProps } from "./type";
 
-export const RowTable: React.FC<RowTableProps> = ({data: Category, onDelete, no, onEdit}) => {
+export const RowTable: React.FC<RowTableProps> = ({data: Category, onDelete, onEdit}) => {
   return <tr>
-    <td>{no}</td>
+    <td>{Category.no}</td>
     <td>{Category.name}</td>
     <td>{Category.isUsed === 1 ? "Used" : "Not Used"}</td>
     <td>{Category.date}</td>
